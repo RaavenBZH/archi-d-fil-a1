@@ -16,6 +16,11 @@ with open('{}/databases/movies.json'.format("."), 'r') as jsf:
 def home():
     return make_response("<h1 style='color:blue'>Welcome to the Movie service!</h1>",200)
 
+@app.route("/json", methods=["GET"])
+def get_json():
+    res = make_response(jsonify(movies), 200)
+    return res
+
 if __name__ == "__main__":
     #p = sys.argv[1]
     print("Server running in port %s"%(PORT))
