@@ -20,6 +20,10 @@ with open('movie/databases/movies.json'.format("."), 'r') as jsf:
 def home():
     return make_response("<h1 style='color:black'>Welcome to the Movie service!</h1>",200)
 
+@app.route("/template", methods=['GET'])
+def template():
+    return make_response(render_template('index.html', body_text='This is my HTML template for Movie service'),200)
+
 @app.route("/json", methods=['GET'])
 def get_json():
     res = make_response(jsonify(movies), 200)
@@ -59,6 +63,27 @@ def add_movie(movieid):
     movies.append(req)
     write(movies)
     res = make_response(jsonify({"message":"movie added"}),200)
+    return res
+
+@app.route("/movies/<movieid>/<rate>", methods=['PUT'])
+def update_movie_rating(movieid, rate):
+    for movie in movies:
+        if str(movie["id"]) == str(movieid):
+            movie["rating"] = rate
+            res = make_response(jsonify(movie),200)
+            return res
+
+    res = make_response(jsonify({"error":"movie ID not found"}),201)
+    return res
+
+@app.route("/movies/<movieid>", methods=['DELETE'])
+def del_movie(movieid):
+    for movie in movies:
+        if str(movie["id"]) == str(movieid):
+            movies.remove(movie)
+            return make_response(jsonify(movie),200)
+
+    res = make_response(jsonify({"error":"movie ID not found"}),400)
     return res
 
 if __name__ == "__main__":
