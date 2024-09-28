@@ -88,6 +88,27 @@ def get_movie_bydirector():
         res = make_response(jsonify(result),200)
     return res
 
+@app.route("/moviesbyrate", methods=['GET'])
+def get_movie_byrate():
+    result = []
+    epsilon = 0.5
+    if request.args:
+        req = request.args
+        for movie in movies:
+            rate = float(req["rate"])
+            
+            cond1 = rate - epsilon <= movie["rating"]
+            cond2 = rate + epsilon >= movie["rating"]
+
+            if cond1 and cond2:
+                result.append(movie)
+
+    if not result:
+        res = make_response(jsonify({"error":"movie rate not found"}),400)
+    else:
+        res = make_response(jsonify(result),200)
+    return res
+
 @app.route("/addmovie/<movieid>", methods=['POST'])
 def add_movie(movieid):
     req = request.get_json()

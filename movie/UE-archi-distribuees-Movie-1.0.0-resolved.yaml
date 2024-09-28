@@ -148,7 +148,7 @@ paths:
                 $ref: '#/components/schemas/MovieItem'
         "400":
           description: bad input parameter
-  /moviesbytitle:
+  /moviesbydirector:
     get:
       tags:
       - developers
@@ -165,6 +165,32 @@ paths:
         explode: true
         schema:
           type: string
+      responses:
+        "200":
+          description: Movie item
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovieItem'
+        "400":
+          description: bad input parameter
+  /moviesbyrate:
+    get:
+      tags:
+      - developers
+      summary: get the movie by (more or less) its rate
+      description: |
+        By passing in the appropriate options, you can get Movie info
+      operationId: get_movie_byrate
+      parameters:
+      - name: rate
+        in: query
+        description: pass a rate
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
       responses:
         "200":
           description: Movie item
