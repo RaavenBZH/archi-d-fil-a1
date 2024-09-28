@@ -15,6 +15,10 @@ with open('{}/databases/users.json'.format("."), "r") as jsf:
 def home():
    return "<h1 style='color:blue'>Welcome to the User service!</h1>"
 
+@app.route("/users", methods=['GET'])
+def get_users():
+   res = make_response(jsonify(users), 200)
+   return res
 
 if __name__ == "__main__":
    print("Server running in port %s"%(PORT))
