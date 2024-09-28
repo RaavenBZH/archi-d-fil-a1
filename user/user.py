@@ -24,15 +24,26 @@ def get_users():
 def get_user_byid(userid):
    for user in users:
       if str(user["id"]) == str(userid):
-         user["bookings"] = requests.get("http://booking:3201/bookingsbyuserid/{}".format(userid)).json()
+         try:
+            bookings = requests.get(f"http://booking:3201/bookings/{userid}").json()
+            user["bookings"] = bookings
+         except requests.exceptions.RequestException as e:
+            print(f"Error connecting to booking service: {e}")
+            return make_response(jsonify({"error": "Error connecting to booking service"}), 500)
          res = make_response(jsonify(user),200)
          return res
-   return make_response(jsonify({"error":"User ID not found"}),400)
+   return make_response(jsonify({"error": "User ID not found"}), 400)
 
 @app.route("/usersbyname/<username>", methods=['GET'])
 def get_user_byname(username):
    for user in users:
       if str(user["name"]) == str(username):
+         try:
+            bookings = requests.get(f"http://booking:3201/bookings/{user["id"]}").json()
+            user["bookings"] = bookings
+         except requests.exceptions.RequestException as e:
+            print(f"Error connecting to booking service: {e}")
+            return make_response(jsonify({"error": "Error connecting to booking service"}), 500)
          res = make_response(jsonify(user),200)
          return res
    return make_response(jsonify({"error":"User name not found"}),400)

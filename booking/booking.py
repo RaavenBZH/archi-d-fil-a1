@@ -53,9 +53,6 @@ def add_booking_byuser(userid):
 
    return make_response(jsonify({"error": "Date not found"}), 400)
 
-
-
-
 def write(bookings):
     with open('./databases/movies.json'.format("."), 'w') as f:
         json.dump(bookings, f)
