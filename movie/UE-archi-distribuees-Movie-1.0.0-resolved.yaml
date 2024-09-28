@@ -231,6 +231,17 @@ paths:
           description: rate updated
         "400":
           description: movie ID not found
+  /help:
+    get:
+      tags:
+      - developers
+      summary: get the help page
+      description: |
+        Nothing to do
+      operationId: help
+      responses:
+        "200":
+          description: help message
 components:
   schemas:
     AllMovies:

@@ -122,6 +122,21 @@ def add_movie(movieid):
     res = make_response(jsonify({"message":"movie added"}),200)
     return res
 
+@app.route("/help", methods=['GET'])
+def help():
+    routes = {
+        "/"                        : "GET - Root message",
+        "/json"                    : "GET - Get all movies in JSON format",
+        "/movies/<movieid>"        : "GET - Get a movie by its ID",
+        "/movies/<movieid>"        : "DELETE - Delete a movie by its ID",
+        "/movies/<movieid>/<rate>" : "PUT - Update the rating of a movie by its ID",
+        "/moviesbytitle"           : "GET - Get movies by title",
+        "/moviesbydirector"        : "GET - Get movies by director",
+        "/moviesbyrate"            : "GET - Get movies by rating",
+        "/addmovie/<movieid>"      : "POST - Add a new movie by its ID"
+    }
+    return make_response(jsonify(routes), 200)
+
 if __name__ == "__main__":
     #p = sys.argv[1]
     print("Server running in port %s"%(PORT))
