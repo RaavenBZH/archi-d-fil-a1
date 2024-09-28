@@ -9,10 +9,10 @@ PORT = 3200
 HOST = '0.0.0.0'
 
 def write(movies):
-    with open('movie/databases/movies.json'.format("."), 'w') as f:
+    with open('./databases/movies.json'.format("."), 'w') as f:
         json.dump(movies, f)
 
-with open('movie/databases/movies.json'.format("."), 'r') as jsf:
+with open('./databases/movies.json'.format("."), 'r') as jsf:
    movies = json.load(jsf)["movies"]
 
 # root message
