@@ -32,29 +32,42 @@ def get_booking_for_user(userid):
 def add_booking_byuser(userid):
    new_booking  = request.get_json()
 
-
    url = f"http://showtime:3202/showtimes/{new_booking["date"]}"
-   try:
-      showtime = requests.get(url).json()
-   except Exception as e:
-      return make_response(jsonify({"error": f"Showtime service not available : {url} et {e} " }), 503)
-    # Si la date existe, procéder à l'ajout de la réservation
-   for booking in bookings:
-      if booking["userid"] == userid:
-         for booking_date in booking["dates"]:
-            if booking_date["date"] == new_booking["date"]:
-               for movie in booking_date["movies"]:
-                  if movie["movieid"] == new_booking["movieid"]:
-                     return make_response(jsonify({"error": "User already booked"}), 400)
-                  else:
-                     booking_date["movies"].append(new_booking["movieid"])
-                     write(bookings)
-                     return make_response(jsonify(booking), 200)
+   showtime = requests.get(url).json()
 
-   return make_response(jsonify({"error": "Date not found"}), 400)
+   if "error" not in showtime and new_booking["movieid"] in showtime["movies"]:
+      for booking in bookings:
+         if booking["userid"] == userid: 
+               for booking_date in booking["dates"]:
+                  if booking_date["date"] == new_booking["date"]:  
+                     for movie in booking_date["movies"]:
+                           if movie == new_booking["movieid"]:
+                              return make_response(jsonify({"error": "User already booked this movie"}), 400)
+                     booking_date["movies"].append(new_booking["movieid"])
+                     write(bookings)  
+                     return make_response(jsonify({"message": "Booking updated successfully"}), 200)
+               booking["dates"].append({
+                  "date": new_booking["date"],
+                  "movies": [new_booking["movieid"]]
+               })
+               write(bookings) 
+               return make_response(jsonify({"message": "New date added and movie booked successfully"}), 200)
+
+      bookings.append({
+         "userid": userid,
+         "dates": [{
+               "date": new_booking["date"],
+               "movies": [new_booking["movieid"]]
+         }]
+      })
+      write(bookings)  # Sauvegarde des modifications dans le fichier JSON
+      return make_response(jsonify({"message": "New user and booking created successfully"}), 200)
+   else:
+      return make_response(jsonify({"error": "booking as not a showtime"}), 400)
+
 
 def write(bookings):
-    with open('./databases/movies.json'.format("."), 'w') as f:
+    with open('./databases/bookings.json'.format("."), 'w') as f:
         json.dump(bookings, f)
 
 
