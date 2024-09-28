@@ -72,11 +72,9 @@ def get_user_movies_byid(userid):
          # Get movie data
          for obj in infos:
             for date, movies in obj.items():
-               print(date)
                movies_by_date = []
                for movie in movies:
                   try:
-                     print(f"http://movie:3200/movies/{movie}")
                      movie_data = requests.get(f"http://movie:3200/movies/{movie}").json()
                      movies_by_date.append(movie_data)
                   except requests.exceptions.RequestException as e:
@@ -85,6 +83,7 @@ def get_user_movies_byid(userid):
 
                obj[date] = movies_by_date
 
+         user["movies"] = infos
          res = make_response(jsonify(user),200)
          return res
    return make_response(jsonify({"error": "User ID not found"}), 400)
