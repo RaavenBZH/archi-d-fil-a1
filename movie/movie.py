@@ -4,7 +4,7 @@ from flask import Flask, request, jsonify, make_response
 import resolvers as r
 import os
 
-PORT = 3001
+PORT = 3200
 HOST = '0.0.0.0'
 app = Flask(__name__)
 path = os.getcwd()
@@ -30,7 +30,12 @@ def graphql_server():
                         context_value=None,
                         debug=app.debug
                     )
-    status_code = 200 if success else 400
+    
+    if success:
+        status_code = 200
+    else:
+        status_code = 400
+
     return jsonify(result), status_code
 
 if __name__ == "__main__":

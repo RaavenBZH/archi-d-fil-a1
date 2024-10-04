@@ -3,7 +3,7 @@ services:
   movie:
     build: ./movie/
     ports:
-      - "3200:3001"
+      - "3200:3200"
     volumes:
       - ./movie:/app  # Montage du dossier local movie dans /app du conteneur
     networks:
