@@ -21,3 +21,15 @@ def movie_with_director(_, info, _director):
         for movie in movies['movies']:
             if str(movie["director"]) == _director:
                 return movie
+            
+def movie_with_rate(_, info, _rate):
+    epsilon = 0.5
+    result_set = []
+    with open('{}/data/movies.json'.format("."), "r") as file:
+        movies = json.load(file)
+        for movie in movies['movies']:
+            cond1 = movie["rating"] - epsilon <= _rate
+            cond2 = movie["rating"] + epsilon >= _rate
+            if cond1 and cond2:
+                result_set.append(movie)
+    return result_set
