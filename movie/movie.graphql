@@ -1,6 +1,7 @@
 type Query {
     movie_with_id(_id: String!): Movie,
-    movie_with_title(_title : String!): Movie
+    movie_with_title(_title : String!): Movie,
+    movie_with_director(_director : String!): Movie
 }
 
 type Movie {

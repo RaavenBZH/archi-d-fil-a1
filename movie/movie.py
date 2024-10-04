@@ -15,6 +15,7 @@ query = QueryType()
 movie = ObjectType('Movie')
 query.set_field('movie_with_id', r.movie_with_id)
 query.set_field('movie_with_title', r.movie_with_title)
+query.set_field('movie_with_director', r.movie_with_director)
 schema = make_executable_schema(type_defs, movie, query)
 
 # root message
