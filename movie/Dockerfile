@@ -1,6 +1,6 @@
-FROM python:3.8-alpine
+FROM python
 WORKDIR /app
 COPY requirements.txt /app
 RUN pip install -r requirements.txt
 ADD . /app/
-CMD ["python","-u","movie.py"]
+CMD ["watchmedo", "auto-restart", "--patterns=*.py", "--recursive", "--", "python", "-u", "movie.py"]
