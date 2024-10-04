@@ -1,14 +1,16 @@
 from ariadne import graphql_sync, make_executable_schema, load_schema_from_path, ObjectType, QueryType, MutationType
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, make_response
 
 import resolvers as r
+import os
 
 PORT = 3001
 HOST = '0.0.0.0'
 app = Flask(__name__)
+path = os.getcwd()
 
 # todo create elements for Ariadne
-type_defs = load_schema_from_path('movie/movie.graphql')
+type_defs = load_schema_from_path(f'{path}/movie.graphql')
 query = QueryType()
 movie = ObjectType('Movie')
 query.set_field('movie_with_id', r.movie_with_id)
@@ -18,12 +20,6 @@ schema = make_executable_schema(type_defs, movie, query)
 @app.route("/", methods=['GET'])
 def home():
     return make_response("<h1 style='color:blue'>Welcome to the Movie service!</h1>",200)
-
-# graphql entry points
-@app.route('/graphql', methods=['POST'])
-def graphql_server():
-    # todo to complete
-    pass
 
 @app.route('/graphql', methods=['POST'])
 def graphql_server():
