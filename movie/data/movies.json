@@ -8,7 +8,7 @@
         },
         {
             "title": "The Martian",
-            "rating": 8.2,
+            "rating": 6.2,
             "director": "Ridley Scott",
             "id": "a8034f44-aee4-44cf-b32c-74cf452aaaae"
         },
@@ -41,18 +41,6 @@
             "rating": 7.1,
             "director": "Sam Mendes",
             "id": "39ab85e5-5e8e-4dc5-afea-65dc368bd7ab"
-        },
-        {
-            "title": "Test",
-            "rating": 1.2,
-            "director": "Someone",
-            "id": "xxx"
-        },
-        {
-            "title": "Test",
-            "rating": 1.2,
-            "director": "Someone",
-            "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx"
         }
     ]
 }
