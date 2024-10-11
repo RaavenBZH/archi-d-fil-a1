@@ -4,7 +4,12 @@ type Query {
     movie_with_title(_title : String!): Movie,
     movie_with_director(_director : String!): Movie,
     movie_with_rate(_rate : Float!): [Movie],
+    delete_movie_with_id(_id : String!): Movie
+}
+
+type Mutation{
     delete_movie_with_id(_id : String!): Movie,
+    update_movie_rating(_id : String!, _rate : String!) : Movie
 }
 
 type Movie {

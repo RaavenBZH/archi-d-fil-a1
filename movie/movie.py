@@ -12,6 +12,7 @@ path = os.getcwd()
 # todo create elements for Ariadne
 type_defs = load_schema_from_path(f'{path}/movie.graphql')
 query = QueryType()
+mutation = MutationType()
 movie = ObjectType('Movie')
 info = ObjectType('Info')
 
@@ -20,7 +21,8 @@ query.set_field('movie_with_id', r.movie_with_id)
 query.set_field('movie_with_title', r.movie_with_title)
 query.set_field('movie_with_director', r.movie_with_director)
 query.set_field('movie_with_rate', r.movie_with_rate)
-query.set_field('delete_movie_with_id', r.delete_movie_with_id)
+mutation.set_field('delete_movie_with_id', r.delete_movie_with_id)
+mutation.set_field('update_movie_rating', r.update_movie_rating)
 schema = make_executable_schema(type_defs, movie, query, info)
 
 # root message

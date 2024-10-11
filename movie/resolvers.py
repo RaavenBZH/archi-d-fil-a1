@@ -53,3 +53,15 @@ def delete_movie_with_id(_,info,_id):
                 with open('{}/data/movies.json'.format("."), 'w') as f:
                     json.dump(movies, f)
                 return movie
+            
+def update_movie_rating(_,info,_id, _rate):
+    with open('{}/data/movies.json'.format("."), "r") as file:
+        movies = json.load(file)
+        for movie in movies['movies']:
+            if movie['id'] == _id:
+                movie["rating"] = _rate
+                with open('{}/data/movies.json'.format("."), 'w') as f:
+                    json.dump(movies, f)
+                return movie
+            
+

@@ -87,8 +87,6 @@ def get_user_movies_byid(userid):
                movies_by_date = []
                for movie in movies:
                   try:
-                     print("\n"*10)
-                     print(movie)
                      query = '''
                         query {
                            movie_with_id(_id: "''' + movie +'''") {
