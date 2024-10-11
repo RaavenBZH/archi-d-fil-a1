@@ -12,8 +12,6 @@ from werkzeug.exceptions import NotFound
 # import movie_pb2
 # import movie_pb2_grpc
 
-# CALLING GraphQL requests
-# todo to complete
 
 app = Flask(__name__)
 
@@ -97,9 +95,7 @@ def get_user_movies_byid(userid):
                            }
                         }
                      '''
-                     print(query)
                      movie_data = requests.post("http://movie:3200/graphql", json= {"query" : query}).json()
-                     print(movie_data)
                      movies_by_date.append(movie_data)
                   except requests.exceptions.RequestException as e:
                      print(f"Error connecting to movie service: {e}")

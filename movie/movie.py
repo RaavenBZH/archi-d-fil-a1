@@ -23,7 +23,7 @@ query.set_field('movie_with_director', r.movie_with_director)
 query.set_field('movie_with_rate', r.movie_with_rate)
 mutation.set_field('delete_movie_with_id', r.delete_movie_with_id)
 mutation.set_field('update_movie_rating', r.update_movie_rating)
-schema = make_executable_schema(type_defs, movie, query, info)
+schema = make_executable_schema(type_defs, movie, query, info, mutation)
 
 # root message
 @app.route("/", methods=['GET'])
