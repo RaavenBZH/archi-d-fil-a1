@@ -1,4 +1,15 @@
 import json
+import inspect
+
+def movie_info(_, info):
+    res = []
+
+    # read file functions
+    for name, obj in inspect.getmembers(__import__(__name__)):
+        if inspect.isfunction(obj) and obj.__module__ == __name__:
+            res.append({"route" : name})
+    
+    return res
 
 def movie_with_id(_,info,_id):
     with open('{}/data/movies.json'.format("."), "r") as file:
