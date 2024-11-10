@@ -1,0 +1,29 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+
+// Définition du service Showtime
+service Showtime {
+  // Endpoint pour la page d'accueil
+  rpc Home (google.protobuf.Empty) returns (HomeResponse);
+
+  // Endpoint pour récupérer la base de données complète
+  rpc GetAllSchedules (google.protobuf.Empty) returns (stream Schedule);
+
+  // Endpoint pour récupérer le programme par date
+  rpc GetSchedule (Date) returns (Schedule);
+}
+
+message HomeResponse {
+  string message = 1;
+}
+
+// Requête pour récupérer les films d'une date spécifique
+message Date {
+  string date = 1;  // Format de la date : string, ex: "20151130"
+}
+
+// Définition d'un horaire
+message Schedule {
+  string date = 1;
+  repeated string movies = 2;
+}

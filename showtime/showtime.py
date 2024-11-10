@@ -1,58 +1,47 @@
-# import grpc
-# from concurrent import futures
-# import showtime_pb2
-# import showtime_pb2_grpc
-# import json
-# import os
-
-# path = os.getcwd()
-
-# class ShowtimeServicer(showtime_pb2_grpc.ShowtimeServicer):
-
-#     def __init__(self):
-#         with open('{}/data/times.json'.format(path), "r") as jsf:
-#             self.db = json.load(jsf)["schedule"]
-
-# def serve():
-#     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-#     showtime_pb2_grpc.add_ShowtimeServicer_to_server(ShowtimeServicer(), server)
-#     server.add_insecure_port('[::]:3002')
-#     server.start()
-#     server.wait_for_termination()
-
-from flask import Flask, render_template, request, jsonify, make_response
+import grpc
+from concurrent import futures
+import showtime_pb2
+import showtime_pb2_grpc
 import json
-from werkzeug.exceptions import NotFound
+from grpc_reflection.v1alpha import reflection
 
-app = Flask(__name__)
+class ShowtimeServicer(showtime_pb2_grpc.ShowtimeServicer):
 
-PORT = 3202
-HOST = '0.0.0.0'
+    def __init__(self):
+        with open('{}/data/times.json'.format("."), "r") as jsf:
+            self.db = json.load(jsf)["schedule"]
+    
+    def Home(self, request, context):
+        print("Home")
+        return showtime_pb2.HomeResponse(message="Bienvenue sur showtime")
+    
+    def GetAllSchedules(self, request, context):
+        print("GetAllSchedules")
+        if len(self.db) <= 0 : return showtime_pb2.Schedule(date = "", movies = "") 
+        for schedule in self.db:
+            yield showtime_pb2.Schedule(date = schedule["date"], movies = schedule["movies"])
 
-with open('./data/times.json'.format("."), "r") as jsf:
-   schedule = json.load(jsf)["schedule"]
+    def GetSchedule(self, request, context):
+        print("GetSchedule")
+        if len(self.db) <= 0 : return showtime_pb2.Schedule(date = "", movies = "") 
+        for schedule in self.db:
+            if schedule["date"] == request.date:
+                return showtime_pb2.Schedule(date = schedule["date"], movies = schedule["movies"])
+        return showtime_pb2.Schedule(date = "", movies = "")
 
-@app.route("/", methods=['GET'])
-def home():
-   return "<h1 style='color:blue'>Welcome to the Showtime service!</h1>"
+def serve():
+    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+    showtime_pb2_grpc.add_ShowtimeServicer_to_server(ShowtimeServicer(), server)
 
-@app.route("/showtimes", methods=['GET'])
-def get_schedule():
-    res = make_response(jsonify(schedule), 200)
-    return res
-
-@app.route("/showtimes/<date>", methods=['GET'])
-def get_movies_bydate(date):
-    for s in schedule:
-        if str(s["date"]) == str(date):
-            res = make_response(jsonify(s),200)
-            return res
-    return make_response(jsonify({"error":"Schedule date not found"}),400)
-
-if __name__ == "__main__":
-   print("Server running in port %s"%(PORT))
-   app.run(host=HOST, port=PORT)
+    SERVICE_NAMES = (
+        showtime_pb2.DESCRIPTOR.services_by_name['Showtime'].full_name,
+        reflection.SERVICE_NAME,
+    )
+    reflection.enable_server_reflection(SERVICE_NAMES, server)
+    server.add_insecure_port('[::]:3002')
+    server.start()
+    server.wait_for_termination()
 
 
-# if __name__ == '__main__':
-#     serve()
+if __name__ == '__main__':
+    serve()
