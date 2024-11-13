@@ -8,7 +8,11 @@ class BookingService(booking_pb2_grpc.BookingService):
 
    def __init__(self):
       with open('{}/data/bookings.json'.format("."), "r") as jsf:
-         self.db = json.load(jsf)["bookings"]
+         self.db = json.load(jsf)
+
+   def write(self,bookings):
+      with open('{}/data/bookings.json'.format("."), 'w') as f:
+         json.dump(bookings, f)
 
    def Home(self, request, context):
         print("Home")
@@ -19,7 +23,7 @@ class BookingService(booking_pb2_grpc.BookingService):
    def GetAllBookings(self, request, context):
       print("GetAllBookings")
       response = booking_pb2.AllBookingsResponse()
-      for booking in self.db:
+      for booking in self.db["bookings"]:
          booking_user = booking_pb2.BookingsUser(
                userid=booking["userid"],
                dates=[
@@ -30,13 +34,16 @@ class BookingService(booking_pb2_grpc.BookingService):
                ]
          )
          response.bookings.append(booking_user)
-      print(response)
+      if len(response.bookings) <= 0:
+         context.set_code(grpc.StatusCode.NOT_FOUND)
+         context.set_details("No booking !")
       return response
 
    def GetBookingsForUser(self, request, context):
       print("GetBookingsForUser")
       response = booking_pb2.BookingsUserResponse()
-      for booking in self.db:
+      responseFound = False
+      for booking in self.db["bookings"]:
          if booking["userid"] == request.userid:
                response.userid = booking["userid"]
                for date in booking["dates"]:
@@ -45,19 +52,31 @@ class BookingService(booking_pb2_grpc.BookingService):
                      movies=date["movies"]
                   )
                   response.dates.append(date_item)
+               responseFound = True
                break
+      if not responseFound:
+         context.set_code(grpc.StatusCode.NOT_FOUND)
+         context.set_details("Booking not found for this user")
       return response
 
    def AddBookingForUser(self, request, context):
+      print("AddBookingForUser")   
+      user_request = booking_pb2.UserIdRequest(userid=request.userid)
+      response = self.GetBookingsForUser(user_request, context)
+      for i in range(len(response.dates)):
+         if response.userid == request.userid and response.dates[i].date == request.date and request.movieid in response.dates[i].movies:
+            context.set_code(grpc.StatusCode.NOT_FOUND)
+            context.set_details("Booking already exists!")
+            return booking_pb2.BookingsUserResponse()
+      
       new_booking = {
-         "userid": request.userid,
          "date": request.date,
          "movies": [request.movieid]
       }
 
       # Rechercher l'utilisateur dans les données existantes
       user_found = False
-      for booking in self.db:
+      for booking in self.db["bookings"]:
          if booking["userid"] == request.userid:
                # Ajouter la date ou mettre à jour les films pour cette date
                for date in booking["dates"]:
@@ -72,23 +91,16 @@ class BookingService(booking_pb2_grpc.BookingService):
 
       # Si l'utilisateur n'a pas été trouvé, créer une nouvelle réservation
       if not user_found:
-         self.db.append({
-               "userid": request.userid,
-               "dates": [new_booking]
-         })
+         self.db["bookings"].append({
+            "userid": request.userid,
+            "dates": [new_booking]
+        })
+
+      self.write(self.db)
 
       # Préparer la réponse
-      response = booking_pb2.BookingsUserResponse(userid=request.userid)
-      for booking in self.db:
-         if booking["userid"] == request.userid:
-               for date in booking["dates"]:
-                  date_item = booking_pb2.DateItem(
-                     date=date["date"],
-                     movies=date["movies"]
-                  )
-                  response.dates.append(date_item)
-               break
-      return response
+      return self.GetBookingsForUser(user_request, context)
+   
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
