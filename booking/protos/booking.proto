@@ -1,0 +1,57 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+
+
+service BookingService {
+    // Service home page
+    rpc Home(google.protobuf.Empty) returns (HomeResponse);
+
+    // Get all bookings in JSON format
+    rpc GetAllBookings(google.protobuf.Empty) returns (AllBookingsResponse);
+
+    // Get bookings for a specific user
+    rpc GetBookingsForUser(UserIdRequest) returns (BookingsUserResponse);
+
+    // Add a booking for a user
+    rpc AddBookingForUser(NewBookingRequest) returns (BookingsUserResponse);
+}
+
+
+message HomeResponse {
+    string message = 1; 
+}
+
+// Request for user-specific bookings
+message UserIdRequest {
+    string userid = 1;
+}
+
+// Response with all bookings in the system
+message AllBookingsResponse {
+    repeated BookingsUser bookings = 1;
+}
+
+// Response with bookings for a specific user
+message BookingsUserResponse {
+    string userid = 1;
+    repeated DateItem dates = 2;
+}
+
+// Request for adding a new booking
+message NewBookingRequest {
+    string userid = 1;
+    string date = 2;
+    string movieid = 3;
+}
+
+// Individual user booking information
+message BookingsUser {
+    string userid = 1;
+    repeated DateItem dates = 2;
+}
+
+// Date-specific information for bookings
+message DateItem {
+    string date = 1;
+    repeated string movies = 2;
+}
