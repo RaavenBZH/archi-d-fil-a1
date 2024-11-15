@@ -38,7 +38,7 @@ def serve():
         reflection.SERVICE_NAME,
     )
     reflection.enable_server_reflection(SERVICE_NAMES, server)
-    server.add_insecure_port('[::]:3002')
+    server.add_insecure_port('[::]:3202')
     server.start()
     server.wait_for_termination()
 

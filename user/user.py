@@ -8,7 +8,7 @@ import grpc
 from concurrent import futures
 
 import os, sys
-sys.path.append(os.path.join(os.path.dirname(__file__), '../booking'))
+sys.path.append(os.path.join(os.path.dirname(__file__), 'booking'))
 
 from booking import booking_pb2, booking_pb2_grpc
 
@@ -33,6 +33,7 @@ def home():
 
 @app.route("/users", methods=['GET'])
 def get_users():
+    print('ok')
     return make_response(jsonify(users), 200)
 
 @app.route("/usersbyid/<userid>", methods=['GET'])
@@ -72,8 +73,8 @@ def get_user_byname(username):
                 # Process response
                 user["bookings"] = [
                     {
-                        "date": date_item.date,
-                        "movies": date_item.movies
+                        "date": str(date_item.date),
+                        "movies": list(date_item.movies)
                     }
                     for date_item in response.dates
                 ]
@@ -97,7 +98,7 @@ def get_user_movies_byid(userid):
                 # Process booking data
                 for date_item in response.dates:
                     obj = {
-                        date_item.date: date_item.movies
+                        date_item.date: list(date_item.movies)
                     }
                     infos.append(obj)
             except grpc.RpcError as e:

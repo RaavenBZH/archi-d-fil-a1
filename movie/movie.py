@@ -16,7 +16,7 @@ mutation = MutationType()
 movie = ObjectType('Movie')
 info = ObjectType('Info')
 
-query.set_field('movie_info',r.movie_info)
+query.set_field('movies_info',r.movies_info)
 query.set_field('movie_with_id', r.movie_with_id)
 query.set_field('movie_with_title', r.movie_with_title)
 query.set_field('movie_with_director', r.movie_with_director)

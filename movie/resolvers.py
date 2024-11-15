@@ -1,7 +1,7 @@
 import json
 import inspect
 
-def movie_info(_, info):
+def movies_info(_, info):
     res = []
 
     # read file functions
@@ -38,8 +38,8 @@ def movie_with_rate(_, info, _rate):
     with open('{}/data/movies.json'.format("."), "r") as file:
         movies = json.load(file)
         for movie in movies['movies']:
-            cond1 = movie["rating"] - epsilon <= _rate
-            cond2 = movie["rating"] + epsilon >= _rate
+            cond1 = float(movie["rating"]) - epsilon <= _rate
+            cond2 = float(movie["rating"]) + epsilon >= _rate
             if cond1 and cond2:
                 result_set.append(movie)
     return result_set

@@ -2,10 +2,10 @@ import grpc
 from concurrent import futures
 import booking_pb2
 import booking_pb2_grpc
-import json
+import json 
 
 import os, sys
-sys.path.append(os.path.join(os.path.dirname(__file__), '../showtime'))
+sys.path.append(os.path.join(os.path.dirname(__file__), 'showtime'))
 from showtime import showtime_pb2, showtime_pb2_grpc
 
 class BookingService(booking_pb2_grpc.BookingService):
@@ -13,7 +13,7 @@ class BookingService(booking_pb2_grpc.BookingService):
    def __init__(self):
       with open('{}/data/bookings.json'.format("."), "r") as jsf:
          self.db = json.load(jsf)
-      self.showtime_channel = grpc.insecure_channel('localhost:3002')
+      self.showtime_channel = grpc.insecure_channel('showtime:3202')
       self.showtime_stub = showtime_pb2_grpc.ShowtimeStub(self.showtime_channel)
 
    def write(self,bookings):
@@ -118,14 +118,12 @@ class BookingService(booking_pb2_grpc.BookingService):
    
 
 def serve():
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    booking_pb2_grpc.add_BookingServiceServicer_to_server(BookingService(), server)
-    server.add_insecure_port('[::]:3003')
-    server.start()
-    server.wait_for_termination()
+   server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+   booking_pb2_grpc.add_BookingServiceServicer_to_server(BookingService(), server)
+   server.add_insecure_port('[::]:3201')
+   server.start()
+   server.wait_for_termination()
 
         
 if __name__ == '__main__':
     serve()
-
-
