@@ -4,11 +4,17 @@ import booking_pb2
 import booking_pb2_grpc
 import json
 
+import os, sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '../showtime'))
+from showtime import showtime_pb2, showtime_pb2_grpc
+
 class BookingService(booking_pb2_grpc.BookingService):
 
    def __init__(self):
       with open('{}/data/bookings.json'.format("."), "r") as jsf:
          self.db = json.load(jsf)
+      self.showtime_channel = grpc.insecure_channel('localhost:3002')
+      self.showtime_stub = showtime_pb2_grpc.ShowtimeStub(self.showtime_channel)
 
    def write(self,bookings):
       with open('{}/data/bookings.json'.format("."), 'w') as f:
@@ -16,7 +22,7 @@ class BookingService(booking_pb2_grpc.BookingService):
 
    def Home(self, request, context):
         print("Home")
-        response = booking_pb2.HomeResponse()
+        response = booking_pb2.BookingHomeResponse()
         response.message = "<h1>Bienvenue sur booking</h1>"
         return response
 
@@ -61,6 +67,15 @@ class BookingService(booking_pb2_grpc.BookingService):
 
    def AddBookingForUser(self, request, context):
       print("AddBookingForUser")   
+
+      showtime_request = showtime_pb2.Date(date=request.date)
+      schedule = self.showtime_stub.GetSchedule(showtime_request)
+
+      if request.movieid not in schedule.movies:
+         context.set_code(grpc.StatusCode.INVALID_ARGUMENT)
+         context.set_details("Film not scheduled on the specified date.")
+         return booking_pb2.BookingsUserResponse()
+
       user_request = booking_pb2.UserIdRequest(userid=request.userid)
       response = self.GetBookingsForUser(user_request, context)
       for i in range(len(response.dates)):

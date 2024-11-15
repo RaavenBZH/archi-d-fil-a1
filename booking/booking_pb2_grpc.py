@@ -38,7 +38,7 @@ class BookingServiceStub(object):
         self.Home = channel.unary_unary(
                 '/BookingService/Home',
                 request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-                response_deserializer=booking__pb2.HomeResponse.FromString,
+                response_deserializer=booking__pb2.BookingHomeResponse.FromString,
                 _registered_method=True)
         self.GetAllBookings = channel.unary_unary(
                 '/BookingService/GetAllBookings',
@@ -94,7 +94,7 @@ def add_BookingServiceServicer_to_server(servicer, server):
             'Home': grpc.unary_unary_rpc_method_handler(
                     servicer.Home,
                     request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-                    response_serializer=booking__pb2.HomeResponse.SerializeToString,
+                    response_serializer=booking__pb2.BookingHomeResponse.SerializeToString,
             ),
             'GetAllBookings': grpc.unary_unary_rpc_method_handler(
                     servicer.GetAllBookings,
@@ -138,7 +138,7 @@ class BookingService(object):
             target,
             '/BookingService/Home',
             google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-            booking__pb2.HomeResponse.FromString,
+            booking__pb2.BookingHomeResponse.FromString,
             options,
             channel_credentials,
             insecure,

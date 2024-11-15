@@ -4,7 +4,7 @@ import "google/protobuf/empty.proto";
 
 service BookingService {
     // Service home page
-    rpc Home(google.protobuf.Empty) returns (HomeResponse);
+    rpc Home(google.protobuf.Empty) returns (BookingHomeResponse);
 
     // Get all bookings in JSON format
     rpc GetAllBookings(google.protobuf.Empty) returns (AllBookingsResponse);
@@ -17,7 +17,7 @@ service BookingService {
 }
 
 
-message HomeResponse {
+message BookingHomeResponse {
     string message = 1; 
 }
 
