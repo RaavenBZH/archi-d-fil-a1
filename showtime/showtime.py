@@ -13,7 +13,7 @@ class ShowtimeServicer(showtime_pb2_grpc.ShowtimeServicer):
     
     def Home(self, request, context):
         print("Home")
-        return showtime_pb2.HomeResponse(message="Bienvenue sur showtime")
+        return showtime_pb2.ShowtimeHomeResponse(message="Bienvenue sur showtime")
     
     def GetAllSchedules(self, request, context):
         print("GetAllSchedules")

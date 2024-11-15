@@ -4,7 +4,7 @@ import "google/protobuf/empty.proto";
 // Définition du service Showtime
 service Showtime {
   // Endpoint pour la page d'accueil
-  rpc Home (google.protobuf.Empty) returns (HomeResponse);
+  rpc Home (google.protobuf.Empty) returns (ShowtimeHomeResponse);
 
   // Endpoint pour récupérer la base de données complète
   rpc GetAllSchedules (google.protobuf.Empty) returns (stream Schedule);
@@ -13,7 +13,7 @@ service Showtime {
   rpc GetSchedule (Date) returns (Schedule);
 }
 
-message HomeResponse {
+message ShowtimeHomeResponse {
   string message = 1;
 }
 

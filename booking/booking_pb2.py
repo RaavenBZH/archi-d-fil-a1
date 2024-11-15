@@ -25,27 +25,27 @@ _sym_db = _symbol_database.Default()
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rbooking.proto\x1a\x1bgoogle/protobuf/empty.proto\"\x1f\n\x0cHomeResponse\x12\x0f\n\x07message\x18\x01 \x01(\t\"\x1f\n\rUserIdRequest\x12\x0e\n\x06userid\x18\x01 \x01(\t\"6\n\x13\x41llBookingsResponse\x12\x1f\n\x08\x62ookings\x18\x01 \x03(\x0b\x32\r.BookingsUser\"@\n\x14\x42ookingsUserResponse\x12\x0e\n\x06userid\x18\x01 \x01(\t\x12\x18\n\x05\x64\x61tes\x18\x02 \x03(\x0b\x32\t.DateItem\"B\n\x11NewBookingRequest\x12\x0e\n\x06userid\x18\x01 \x01(\t\x12\x0c\n\x04\x64\x61te\x18\x02 \x01(\t\x12\x0f\n\x07movieid\x18\x03 \x01(\t\"8\n\x0c\x42ookingsUser\x12\x0e\n\x06userid\x18\x01 \x01(\t\x12\x18\n\x05\x64\x61tes\x18\x02 \x03(\x0b\x32\t.DateItem\"(\n\x08\x44\x61teItem\x12\x0c\n\x04\x64\x61te\x18\x01 \x01(\t\x12\x0e\n\x06movies\x18\x02 \x03(\t2\xfc\x01\n\x0e\x42ookingService\x12-\n\x04Home\x12\x16.google.protobuf.Empty\x1a\r.HomeResponse\x12>\n\x0eGetAllBookings\x12\x16.google.protobuf.Empty\x1a\x14.AllBookingsResponse\x12;\n\x12GetBookingsForUser\x12\x0e.UserIdRequest\x1a\x15.BookingsUserResponse\x12>\n\x11\x41\x64\x64\x42ookingForUser\x12\x12.NewBookingRequest\x1a\x15.BookingsUserResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rbooking.proto\x1a\x1bgoogle/protobuf/empty.proto\"&\n\x13\x42ookingHomeResponse\x12\x0f\n\x07message\x18\x01 \x01(\t\"\x1f\n\rUserIdRequest\x12\x0e\n\x06userid\x18\x01 \x01(\t\"6\n\x13\x41llBookingsResponse\x12\x1f\n\x08\x62ookings\x18\x01 \x03(\x0b\x32\r.BookingsUser\"@\n\x14\x42ookingsUserResponse\x12\x0e\n\x06userid\x18\x01 \x01(\t\x12\x18\n\x05\x64\x61tes\x18\x02 \x03(\x0b\x32\t.DateItem\"B\n\x11NewBookingRequest\x12\x0e\n\x06userid\x18\x01 \x01(\t\x12\x0c\n\x04\x64\x61te\x18\x02 \x01(\t\x12\x0f\n\x07movieid\x18\x03 \x01(\t\"8\n\x0c\x42ookingsUser\x12\x0e\n\x06userid\x18\x01 \x01(\t\x12\x18\n\x05\x64\x61tes\x18\x02 \x03(\x0b\x32\t.DateItem\"(\n\x08\x44\x61teItem\x12\x0c\n\x04\x64\x61te\x18\x01 \x01(\t\x12\x0e\n\x06movies\x18\x02 \x03(\t2\x83\x02\n\x0e\x42ookingService\x12\x34\n\x04Home\x12\x16.google.protobuf.Empty\x1a\x14.BookingHomeResponse\x12>\n\x0eGetAllBookings\x12\x16.google.protobuf.Empty\x1a\x14.AllBookingsResponse\x12;\n\x12GetBookingsForUser\x12\x0e.UserIdRequest\x1a\x15.BookingsUserResponse\x12>\n\x11\x41\x64\x64\x42ookingForUser\x12\x12.NewBookingRequest\x1a\x15.BookingsUserResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'booking_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
-  _globals['_HOMERESPONSE']._serialized_start=46
-  _globals['_HOMERESPONSE']._serialized_end=77
-  _globals['_USERIDREQUEST']._serialized_start=79
-  _globals['_USERIDREQUEST']._serialized_end=110
-  _globals['_ALLBOOKINGSRESPONSE']._serialized_start=112
-  _globals['_ALLBOOKINGSRESPONSE']._serialized_end=166
-  _globals['_BOOKINGSUSERRESPONSE']._serialized_start=168
-  _globals['_BOOKINGSUSERRESPONSE']._serialized_end=232
-  _globals['_NEWBOOKINGREQUEST']._serialized_start=234
-  _globals['_NEWBOOKINGREQUEST']._serialized_end=300
-  _globals['_BOOKINGSUSER']._serialized_start=302
-  _globals['_BOOKINGSUSER']._serialized_end=358
-  _globals['_DATEITEM']._serialized_start=360
-  _globals['_DATEITEM']._serialized_end=400
-  _globals['_BOOKINGSERVICE']._serialized_start=403
-  _globals['_BOOKINGSERVICE']._serialized_end=655
+  _globals['_BOOKINGHOMERESPONSE']._serialized_start=46
+  _globals['_BOOKINGHOMERESPONSE']._serialized_end=84
+  _globals['_USERIDREQUEST']._serialized_start=86
+  _globals['_USERIDREQUEST']._serialized_end=117
+  _globals['_ALLBOOKINGSRESPONSE']._serialized_start=119
+  _globals['_ALLBOOKINGSRESPONSE']._serialized_end=173
+  _globals['_BOOKINGSUSERRESPONSE']._serialized_start=175
+  _globals['_BOOKINGSUSERRESPONSE']._serialized_end=239
+  _globals['_NEWBOOKINGREQUEST']._serialized_start=241
+  _globals['_NEWBOOKINGREQUEST']._serialized_end=307
+  _globals['_BOOKINGSUSER']._serialized_start=309
+  _globals['_BOOKINGSUSER']._serialized_end=365
+  _globals['_DATEITEM']._serialized_start=367
+  _globals['_DATEITEM']._serialized_end=407
+  _globals['_BOOKINGSERVICE']._serialized_start=410
+  _globals['_BOOKINGSERVICE']._serialized_end=669
 # @@protoc_insertion_point(module_scope)

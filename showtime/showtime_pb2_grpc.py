@@ -39,7 +39,7 @@ class ShowtimeStub(object):
         self.Home = channel.unary_unary(
                 '/Showtime/Home',
                 request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-                response_deserializer=showtime__pb2.HomeResponse.FromString,
+                response_deserializer=showtime__pb2.ShowtimeHomeResponse.FromString,
                 _registered_method=True)
         self.GetAllSchedules = channel.unary_stream(
                 '/Showtime/GetAllSchedules',
@@ -84,7 +84,7 @@ def add_ShowtimeServicer_to_server(servicer, server):
             'Home': grpc.unary_unary_rpc_method_handler(
                     servicer.Home,
                     request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-                    response_serializer=showtime__pb2.HomeResponse.SerializeToString,
+                    response_serializer=showtime__pb2.ShowtimeHomeResponse.SerializeToString,
             ),
             'GetAllSchedules': grpc.unary_stream_rpc_method_handler(
                     servicer.GetAllSchedules,
@@ -124,7 +124,7 @@ class Showtime(object):
             target,
             '/Showtime/Home',
             google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-            showtime__pb2.HomeResponse.FromString,
+            showtime__pb2.ShowtimeHomeResponse.FromString,
             options,
             channel_credentials,
             insecure,
