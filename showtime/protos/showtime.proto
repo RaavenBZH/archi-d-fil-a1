@@ -11,6 +11,8 @@ service Showtime {
 
   // Endpoint pour récupérer le programme par date
   rpc GetSchedule (Date) returns (Schedule);
+
+  rpc AddSchedule (Schedule) returns (Schedule);
 }
 
 message ShowtimeHomeResponse {

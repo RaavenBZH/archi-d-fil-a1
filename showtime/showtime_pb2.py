@@ -25,7 +25,7 @@ _sym_db = _symbol_database.Default()
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0eshowtime.proto\x1a\x1bgoogle/protobuf/empty.proto\"\'\n\x14ShowtimeHomeResponse\x12\x0f\n\x07message\x18\x01 \x01(\t\"\x14\n\x04\x44\x61te\x12\x0c\n\x04\x64\x61te\x18\x01 \x01(\t\"(\n\x08Schedule\x12\x0c\n\x04\x64\x61te\x18\x01 \x01(\t\x12\x0e\n\x06movies\x18\x02 \x03(\t2\x9a\x01\n\x08Showtime\x12\x35\n\x04Home\x12\x16.google.protobuf.Empty\x1a\x15.ShowtimeHomeResponse\x12\x36\n\x0fGetAllSchedules\x12\x16.google.protobuf.Empty\x1a\t.Schedule0\x01\x12\x1f\n\x0bGetSchedule\x12\x05.Date\x1a\t.Scheduleb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0eshowtime.proto\x1a\x1bgoogle/protobuf/empty.proto\"\'\n\x14ShowtimeHomeResponse\x12\x0f\n\x07message\x18\x01 \x01(\t\"\x14\n\x04\x44\x61te\x12\x0c\n\x04\x64\x61te\x18\x01 \x01(\t\"(\n\x08Schedule\x12\x0c\n\x04\x64\x61te\x18\x01 \x01(\t\x12\x0e\n\x06movies\x18\x02 \x03(\t2\xbf\x01\n\x08Showtime\x12\x35\n\x04Home\x12\x16.google.protobuf.Empty\x1a\x15.ShowtimeHomeResponse\x12\x36\n\x0fGetAllSchedules\x12\x16.google.protobuf.Empty\x1a\t.Schedule0\x01\x12\x1f\n\x0bGetSchedule\x12\x05.Date\x1a\t.Schedule\x12#\n\x0b\x41\x64\x64Schedule\x12\t.Schedule\x1a\t.Scheduleb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -39,5 +39,5 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_SCHEDULE']._serialized_start=110
   _globals['_SCHEDULE']._serialized_end=150
   _globals['_SHOWTIME']._serialized_start=153
-  _globals['_SHOWTIME']._serialized_end=307
+  _globals['_SHOWTIME']._serialized_end=344
 # @@protoc_insertion_point(module_scope)
