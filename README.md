@@ -20,11 +20,11 @@ User (REST)
   
 - [GET] localhost:3203/users -> Renvoie tous les users
   
-- [GET] localhost:3203/usersbyid/<userid> -> Renvoie les réservations d'un utilisateur à partir de son id
+- [GET] localhost:3203/usersbyid/`<userid>` -> Renvoie les réservations d'un utilisateur à partir de son id
   
-- [GET] localhost:3203/usersbyname/<username> ->  Renvoie les réservations d'un utilisateur à partir de son nom
+- [GET] localhost:3203/usersbyname/`<username>` ->  Renvoie les réservations d'un utilisateur à partir de son nom
   
-- [GET] localhost:3203/users/movies/<userid> -> Renvoie les détails des films de la réservation d'un utilisateur à partir de son id
+- [GET] localhost:3203/users/movies/`<userid>` -> Renvoie les détails des films de la réservation d'un utilisateur à partir de son id
 
 
 Movie (GraphQL)
