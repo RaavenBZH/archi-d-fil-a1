@@ -55,21 +55,31 @@ movie_with_id(_id: STRING -> Renvoie un film à partir de son ID
 Mutation : 
 update_movie_rating(_id: STRING,  _rate : FLOAT) -> Change la note d'un film à partir de son ID
 
+Mutation : 
+add_movie (
+        _id: STRING,
+        _title: STRING,
+        _director: STRING,
+        _rating: FLOAT ) -> Ajouter un film
+
+all_movies -> Renvoie tous les films
 
 Showtime (gRPC)
 
-localhost:3202 Showtime / Home (Empty)
+localhost:3202 Showtime / Home (Empty) -> Message de bienvenue
 
-localhost:3202 Showtime / GetAllSchedules (Empty)
+localhost:3202 Showtime / GetAllSchedules (Empty) -> Renvoie toutes les programmations
 
-localhost:3202 Showtime / GetSchedule ("date" : String)
+localhost:3202 Showtime / GetSchedule ("date" : String) -> Renvoie les programmations d'une date
+
+localhost:3202 Showtime / AddSchedule ("date" : String, "movies" liste de string (movieid) -> Ajoute une nouvelle programmation
 
 Booking (gRPC)
 
-localhost:3201 BookingService / Home
+localhost:3201 BookingService / Home -> Message de bienvenue
 
-localhost:3201 BookingService / GetAllBookings
+localhost:3201 BookingService / GetAllBookings -> Renvoie toutes les réservations
 
-localhost:3201 BookingService / GetBookingsForUser ("userid" : String)
+localhost:3201 BookingService / GetBookingsForUser ("userid" : String) -> Renvoie toutes les réservations pour un utilisateur
 
-localhost:3201 BookingService / AddBookingForUser ("userid":String, "date": String, "movieid": String)
+localhost:3201 BookingService / AddBookingForUser ("userid":String, "date": String, "movieid": String) -> Ajoute une réservation pour un utilisateur et un film
