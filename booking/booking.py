@@ -32,7 +32,7 @@ def get_booking_for_user(userid):
 def add_booking_byuser(userid):
    new_booking  = request.get_json()
 
-   url = f"http://showtime:3202/showtimes/{new_booking["date"]}"
+   url = f"http://showtime:3202/showtimes/{new_booking['date']}"
    showtime = requests.get(url).json()
 
    if "error" not in showtime and new_booking["movieid"] in showtime["movies"]:

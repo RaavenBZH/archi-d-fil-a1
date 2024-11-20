@@ -39,7 +39,7 @@ def get_user_byname(username):
    for user in users:
       if str(user["name"]) == str(username):
          try:
-            bookings = requests.get(f"http://booking:3201/bookings/{user["id"]}").json()
+            bookings = requests.get(f"http://booking:3201/bookings/{user['id']}").json()
             user["bookings"] = bookings
          except requests.exceptions.RequestException as e:
             print(f"Error connecting to booking service: {e}")
