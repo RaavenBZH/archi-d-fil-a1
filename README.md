@@ -32,8 +32,10 @@ Movie (GraphQL)
 http://localhost:3200/graphql 
 
 Query : 
-movie_with_rate(_rate: FLOAT)
-  -> Renvoie les films ayant une note de plus ou moins _rate en note
+movie_with_rate(_rate: FLOAT) -> Renvoie les films ayant une note de plus ou moins _rate en note
+
+Query : 
+all_movies -> Renvoie toutes les films
 
 Query : 
 movies_info -> Renvoie toutes les routes liées à Movie
