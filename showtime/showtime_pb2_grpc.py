@@ -51,6 +51,11 @@ class ShowtimeStub(object):
                 request_serializer=showtime__pb2.Date.SerializeToString,
                 response_deserializer=showtime__pb2.Schedule.FromString,
                 _registered_method=True)
+        self.AddSchedule = channel.unary_unary(
+                '/Showtime/AddSchedule',
+                request_serializer=showtime__pb2.Schedule.SerializeToString,
+                response_deserializer=showtime__pb2.Schedule.FromString,
+                _registered_method=True)
 
 
 class ShowtimeServicer(object):
@@ -78,6 +83,12 @@ class ShowtimeServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def AddSchedule(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_ShowtimeServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -94,6 +105,11 @@ def add_ShowtimeServicer_to_server(servicer, server):
             'GetSchedule': grpc.unary_unary_rpc_method_handler(
                     servicer.GetSchedule,
                     request_deserializer=showtime__pb2.Date.FromString,
+                    response_serializer=showtime__pb2.Schedule.SerializeToString,
+            ),
+            'AddSchedule': grpc.unary_unary_rpc_method_handler(
+                    servicer.AddSchedule,
+                    request_deserializer=showtime__pb2.Schedule.FromString,
                     response_serializer=showtime__pb2.Schedule.SerializeToString,
             ),
     }
@@ -178,6 +194,33 @@ class Showtime(object):
             target,
             '/Showtime/GetSchedule',
             showtime__pb2.Date.SerializeToString,
+            showtime__pb2.Schedule.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def AddSchedule(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/Showtime/AddSchedule',
+            showtime__pb2.Schedule.SerializeToString,
             showtime__pb2.Schedule.FromString,
             options,
             channel_credentials,

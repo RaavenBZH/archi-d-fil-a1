@@ -11,6 +11,14 @@ def movies_info(_, info):
     
     return res
 
+def all_movies(_, info):
+    result = []
+    with open('{}/data/movies.json'.format("."), "r") as file:
+        movies = json.load(file)
+        for movie in movies['movies']:
+            result.append(movie)
+    return result
+
 def movie_with_id(_,info,_id):
     with open('{}/data/movies.json'.format("."), "r") as file:
         movies = json.load(file)
@@ -63,5 +71,28 @@ def update_movie_rating(_,info,_id, _rate):
                 with open('{}/data/movies.json'.format("."), 'w') as f:
                     json.dump(movies, f)
                 return movie
+            
+def add_movie(_, info, _id, _title, _director, _rating):
+    movieExist = False
+    with open('{}/data/movies.json'.format("."), "r") as file:
+        movies = json.load(file)
+        for movie in movies['movies']:
+            if movie["id"] == _id:
+                movieExist = True
+    print(movieExist)
+    if not movieExist:
+        new_movie = {
+            "id": _id,
+            "title": _title,
+            "director": _director,
+            "rating": _rating,
+        }
+
+        movies["movies"].append(new_movie)
+        with open('./data/movies.json', 'w') as f:
+            json.dump(movies, f)
+
+        return new_movie
+    return None
             
 
