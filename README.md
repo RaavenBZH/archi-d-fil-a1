@@ -62,7 +62,6 @@ add_movie (
         _director: STRING,
         _rating: FLOAT ) -> Ajouter un film
 
-all_movies -> Renvoie tous les films
 
 Showtime (gRPC)
 
