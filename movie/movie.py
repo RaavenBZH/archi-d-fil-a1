@@ -5,125 +5,118 @@ from werkzeug.exceptions import NotFound
 
 app = Flask(__name__)
 
+# Constants
 PORT = 3200
 HOST = '0.0.0.0'
+MOVIES_FILE = './databases/movies.json'
+ERROR_MOVIE_NOT_FOUND = {"error": "Movie ID not found"}
+ERROR_MOVIE_EXISTS = {"error": "Movie ID already exists"}
+ERROR_MOVIE_TITLE_NOT_FOUND = {"error": "Movie title not found"}
+ERROR_MOVIE_DIRECTOR_NOT_FOUND = {"error": "Movie director not found"}
+ERROR_MOVIE_RATE_NOT_FOUND = {"error": "Movie rate not found"}
 
-def write(movies):
-    with open('./databases/movies.json'.format("."), 'w') as f:
-        json.dump(movies, f)
+# Load movies from JSON file
+with open(MOVIES_FILE, 'r') as jsf:
+    movies = json.load(jsf)["movies"]
 
-with open('./databases/movies.json'.format("."), 'r') as jsf:
-   movies = json.load(jsf)["movies"]
+def write_movies():
+    """Helper function to write movies to JSON file."""
+    with open(MOVIES_FILE, 'w') as f:
+        json.dump({"movies": movies}, f)
 
-# root message
 @app.route("/", methods=['GET'])
 def home():
-    return make_response("<h1 style='color:black'>Welcome to the Movie service!</h1>",200)
-
-# @app.route("/template", methods=['GET'])
-# def template():
-#     return make_response(render_template('index.html', body_text='This is my HTML template for Movie service'),200)
+    """Home route to welcome users."""
+    return make_response("<h1 style='color:black'>Welcome to the Movie service!</h1>", 200)
 
 @app.route("/json", methods=['GET'])
 def get_json():
-    res = make_response(jsonify(movies), 200)
-    return res
+    """Route to get all movies in JSON format."""
+    return make_response(jsonify(movies), 200)
 
 @app.route("/movies/<movieid>", methods=['GET'])
 def get_movie_byid(movieid):
+    """Route to get a movie by its ID."""
     for movie in movies:
         if str(movie["id"]) == str(movieid):
-            res = make_response(jsonify(movie),200)
-            return res
-    return make_response(jsonify({"error":"Movie ID not found"}),400)
+            return make_response(jsonify(movie), 200)
+    return make_response(jsonify(ERROR_MOVIE_NOT_FOUND), 400)
 
 @app.route("/movies/<movieid>", methods=['DELETE'])
 def del_movie(movieid):
+    """Route to delete a movie by its ID."""
     for movie in movies:
         if str(movie["id"]) == str(movieid):
             movies.remove(movie)
-            return make_response(jsonify(movie),200)
-
-    res = make_response(jsonify({"error":"movie ID not found"}),400)
-    return res
+            write_movies()
+            return make_response(jsonify(movie), 200)
+    return make_response(jsonify(ERROR_MOVIE_NOT_FOUND), 400)
 
 @app.route("/movies/<movieid>/<rate>", methods=['PUT'])
 def update_movie_rating(movieid, rate):
+    """Route to update the rating of a movie by its ID."""
     for movie in movies:
         if str(movie["id"]) == str(movieid):
             movie["rating"] = rate
-            res = make_response(jsonify(movie),200)
-            return res
-
-    res = make_response(jsonify({"error":"movie ID not found"}),201)
-    return res
+            write_movies()
+            return make_response(jsonify(movie), 200)
+    return make_response(jsonify(ERROR_MOVIE_NOT_FOUND), 400)
 
 @app.route("/moviesbytitle", methods=['GET'])
 def get_movie_bytitle():
+    """Route to get movies by title."""
     result = []
     if request.args:
         req = request.args
         for movie in movies:
             if str(movie["title"]) == str(req["title"]):
                 result.append(movie)
-
     if not result:
-        res = make_response(jsonify({"error":"movie title not found"}),400)
-    else:
-        res = make_response(jsonify(result),200)
-    return res
+        return make_response(jsonify(ERROR_MOVIE_TITLE_NOT_FOUND), 400)
+    return make_response(jsonify(result), 200)
 
 @app.route("/moviesbydirector", methods=['GET'])
 def get_movie_bydirector():
+    """Route to get movies by director."""
     result = []
     if request.args:
         req = request.args
         for movie in movies:
             if str(movie["director"]) == str(req["director"]):
                 result.append(movie)
-
     if not result:
-        res = make_response(jsonify({"error":"movie director not found"}),400)
-    else:
-        res = make_response(jsonify(result),200)
-    return res
+        return make_response(jsonify(ERROR_MOVIE_DIRECTOR_NOT_FOUND), 400)
+    return make_response(jsonify(result), 200)
 
 @app.route("/moviesbyrate", methods=['GET'])
 def get_movie_byrate():
+    """Route to get movies by rating."""
     result = []
     epsilon = 0.5
     if request.args:
         req = request.args
         for movie in movies:
             rate = float(req["rate"])
-            
-            cond1 = rate - epsilon <= movie["rating"]
-            cond2 = rate + epsilon >= movie["rating"]
-
-            if cond1 and cond2:
+            if rate - epsilon <= movie["rating"] <= rate + epsilon:
                 result.append(movie)
-
     if not result:
-        res = make_response(jsonify({"error":"movie rate not found"}),400)
-    else:
-        res = make_response(jsonify(result),200)
-    return res
+        return make_response(jsonify(ERROR_MOVIE_RATE_NOT_FOUND), 400)
+    return make_response(jsonify(result), 200)
 
 @app.route("/addmovie/<movieid>", methods=['POST'])
 def add_movie(movieid):
+    """Route to add a new movie by its ID."""
     req = request.get_json()
-
     for movie in movies:
         if str(movie["id"]) == str(movieid):
-            return make_response(jsonify({"error":"movie ID already exists"}),409)
-
+            return make_response(jsonify(ERROR_MOVIE_EXISTS), 409)
     movies.append(req)
-    write(movies)
-    res = make_response(jsonify({"message":"movie added"}),200)
-    return res
+    write_movies()
+    return make_response(jsonify({"message": "Movie added"}), 200)
 
 @app.route("/help", methods=['GET'])
 def help():
+    """Route to display available endpoints."""
     routes = {
         "/"                        : "GET - Root message",
         "/json"                    : "GET - Get all movies in JSON format",
@@ -138,6 +131,5 @@ def help():
     return make_response(jsonify(routes), 200)
 
 if __name__ == "__main__":
-    #p = sys.argv[1]
-    print("Server running in port %s"%(PORT))
+    print(f"Server running on port {PORT}")
     app.run(host=HOST, port=PORT)
