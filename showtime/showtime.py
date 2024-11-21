@@ -14,6 +14,10 @@ ERROR_SCHEDULE_NOT_FOUND = {"error": "Schedule date not found"}
 with open(SCHEDULE_FILE, "r") as jsf:
     schedule = json.load(jsf)["schedule"]
 
+def write(times):
+    with open('./databases/times.json'.format("."), 'w') as f:
+        json.dump(times, f)
+
 @app.route("/", methods=['GET'])
 def home():
     """Home route to welcome users."""
@@ -31,6 +35,29 @@ def get_movies_bydate(date):
         if str(s["date"]) == str(date):
             return make_response(jsonify(s), 200)
     return make_response(jsonify(ERROR_SCHEDULE_NOT_FOUND), 400)
+
+@app.route("/add_schedule", methods=['POST'])
+def add_schedule():
+    req = request.get_json()
+    for s in schedule:
+        if s["date"] == req["date"]:
+            # Ajouter les nouveaux films à la date existante
+            for movie in req["movies"]:
+                if movie not in s["movies"]:
+                    s["movies"].append(movie)
+            write(schedule)
+            res = make_response(jsonify({"message":f"schedule added : {req}"}),200)
+            return res
+
+    new_schedule = {
+        "date":req["date"],
+        "movies": list(req["movies"])
+    } 
+    schedule.append(new_schedule)
+    write(schedule)
+
+    res = make_response(jsonify({"message":f"schedule added : {req}"}),200)
+    return res
 
 if __name__ == "__main__":
     print(f"Server running on port {PORT}")
