@@ -42,16 +42,16 @@ Utilisation des différents endpoints :
 - [GET] ```http://localhost:3202/showtimes/<date>``` -> Renvoie les films d'une date
 - [POST] ```http://localhost:3202add_schedule``` -> Ajoute une programmation
 
-  **Movie**
-  - [GET] ```http://localhost:3200/json``` -> Retourne la liste des films
-  - [GET] ```http://localhost:3200/``` -> Message de bienvenue 
-  - [GET] ```http://localhost:3200/movies/`<movieid>` ``` -> Renvoie un film à partir de son ID
-  - [GET] ```http://localhost:3200/moviesbytitle?title=TITRE ``` Renvoie un film à partir de son titre
-  - [GET] ```http://localhost:3200/director=DIRECTOR ``` -> Renvoie les films à partir d'un directeur 
-  - [GET] ```http://localhost:3200/moviesbyrate?rate=RATE``` -> Renvoie les films à partir des notes
-  - [GET] ```http://localhost:3200/help``` -> Renvoie les routes de "movie"
-  - [POST] ```http://localhost:3200/addmovie/`<movieid>` ``` -> Ajoute un film 
-  - [DEL] ```http://localhost:3200/movies/`<movieid>` ``` -> Supprime un film 
-  - [PUT] ```http://localhost:3200/movies/`<movieid>`/`<rate>` ``` -> Modifie la note d'un film à partir de son id
+**Movie**
+- [GET] ```http://localhost:3200/json``` -> Retourne la liste des films
+- [GET] ```http://localhost:3200/``` -> Message de bienvenue 
+- [GET] ```http://localhost:3200/movies/`<movieid>` ``` -> Renvoie un film à partir de son ID
+- [GET] ```http://localhost:3200/moviesbytitle?title=TITRE ``` Renvoie un film à partir de son titre
+- [GET] ```http://localhost:3200/director=DIRECTOR ``` -> Renvoie les films à partir d'un directeur 
+- [GET] ```http://localhost:3200/moviesbyrate?rate=RATE``` -> Renvoie les films à partir des notes
+- [GET] ```http://localhost:3200/help``` -> Renvoie les routes de "movie"
+- [POST] ```http://localhost:3200/addmovie/`<movieid>` ``` -> Ajoute un film 
+- [DEL] ```http://localhost:3200/movies/`<movieid>` ``` -> Supprime un film 
+- [PUT] ```http://localhost:3200/movies/`<movieid>`/`<rate>` ``` -> Modifie la note d'un film à partir de son id
     
     
