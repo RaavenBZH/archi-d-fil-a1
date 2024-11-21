@@ -11,7 +11,7 @@ HOST = '0.0.0.0'
 BOOKINGS_FILE = './databases/bookings.json'
 ERROR_USER_NOT_FOUND = {"error": "User booking not found"}
 ERROR_BOOKING_EXISTS = {"error": "User already booked this movie"}
-ERROR_NO_SHOWTIME = {"error": "No showtime available for the booking"}
+ERROR_NO_SHOWTIME = {"error": "Showtime date or movie did not match"}
 
 # Load bookings from JSON file
 with open(BOOKINGS_FILE, "r") as jsf:
@@ -82,7 +82,7 @@ def handle_booking(userid, new_booking):
 def write_bookings():
     """Helper function to write bookings to JSON file."""
     with open(BOOKINGS_FILE, 'w') as f:
-        json.dump(bookings, f)
+        json.dump({"bookings": bookings}, f)
 
 if __name__ == "__main__":
     print(f"Server running on port {PORT}")

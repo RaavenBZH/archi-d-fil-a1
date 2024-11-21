@@ -17,7 +17,7 @@ with open(SCHEDULE_FILE, "r") as jsf:
 def write(times):
     """Helper function to write schedule to JSON file."""
     with open(SCHEDULE_FILE, 'w') as f:
-        json.dump(times, f)
+        json.dump({"schedule": times}, f)
 
 @app.route("/", methods=['GET'])
 def home():
@@ -48,7 +48,13 @@ def add_schedule():
                 if movie not in s["movies"]:
                     s["movies"].append(movie)
             write(schedule)
-            return make_response(jsonify({"message": f"Schedule updated: {req}"}), 200)
+            return make_response(jsonify({
+                "message": "Schedule updated.",
+                "data": {
+                    "date": req["date"],
+                    "movies": req["movies"]
+                },
+            }), 200)
 
     # Create a new schedule if the date does not exist
     new_schedule = {
@@ -57,7 +63,13 @@ def add_schedule():
     }
     schedule.append(new_schedule)
     write(schedule)
-    return make_response(jsonify({"message": f"Schedule added: {req}"}), 200)
+    return make_response(jsonify({
+        "message": "Schedule created.",
+        "data": {
+            "date": req["date"],
+            "movies": req["movies"]
+        },
+    }), 200)
 
 if __name__ == "__main__":
     print(f"Server running on port {PORT}")
