@@ -72,6 +72,9 @@ class BookingService(booking_pb2_grpc.BookingServiceServicer):
         if not responseFound:
             context.set_code(grpc.StatusCode.NOT_FOUND)
             context.set_details("Booking not found for this user")
+        else:
+            context.set_code(grpc.StatusCode.OK)
+            context.set_details("")
         return response
 
     def AddBookingForUser(self, request, context):
