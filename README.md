@@ -33,10 +33,25 @@ Utilisation des différents endpoints :
  
 - [GET] ```http://localhost:3201/bookings/<userid>``` -> Ajoute une réservation à un utilisateur à partir de son id POST DATA ```"date": STRING, "movieid": STRING```
 
-**showtime (REST)** 
+**Showtime (REST)** 
 
 - [GET] ```http://localhost:3202/``` -> Message de bienvenue 
 
 - [GET] ```http://localhost:3202/showtimes``` -> Renvoie toutes les dates avec les films associés
  
 - [GET] ```http://localhost:3202/showtimes/<date>``` -> Renvoie les films d'une date
+- [POST] ```http://localhost:3202add_schedule``` -> Ajoute une programmation
+
+  **Movie**
+  - [GET] ```http://localhost:3200/json```
+  - [GET] ```http://localhost:3200/```
+  - [GET] ```http://localhost:3200/movies/`<movieid>````
+  - [GET] ```http://localhost:3200/moviesbytitle?title=TITRE ```
+  - [GET] ```http://localhost:3200/director=DIRECTOR ```
+  - [GET] ```http://localhost:3200/moviesbyrate?rate=RATE```
+  - [GET] ```http://localhost:3200/help```
+  - [POST] ```http://localhost:3200/addmovie/`<movieid>````
+  - [DEL] ```http://localhost:3200/movies/`<movieid>````
+  - [PUT] ```http://localhost:3200/movies/`<movieid>`/`<rate>````
+    
+    
