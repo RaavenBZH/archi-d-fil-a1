@@ -15,7 +15,8 @@ with open(SCHEDULE_FILE, "r") as jsf:
     schedule = json.load(jsf)["schedule"]
 
 def write(times):
-    with open('./databases/times.json'.format("."), 'w') as f:
+    """Helper function to write schedule to JSON file."""
+    with open(SCHEDULE_FILE, 'w') as f:
         json.dump(times, f)
 
 @app.route("/", methods=['GET'])
@@ -38,26 +39,25 @@ def get_movies_bydate(date):
 
 @app.route("/add_schedule", methods=['POST'])
 def add_schedule():
+    """Route to add a new schedule or update an existing one."""
     req = request.get_json()
     for s in schedule:
         if s["date"] == req["date"]:
-            # Ajouter les nouveaux films à la date existante
+            # Add new movies to the existing date
             for movie in req["movies"]:
                 if movie not in s["movies"]:
                     s["movies"].append(movie)
             write(schedule)
-            res = make_response(jsonify({"message":f"schedule added : {req}"}),200)
-            return res
+            return make_response(jsonify({"message": f"Schedule updated: {req}"}), 200)
 
+    # Create a new schedule if the date does not exist
     new_schedule = {
-        "date":req["date"],
+        "date": req["date"],
         "movies": list(req["movies"])
-    } 
+    }
     schedule.append(new_schedule)
     write(schedule)
-
-    res = make_response(jsonify({"message":f"schedule added : {req}"}),200)
-    return res
+    return make_response(jsonify({"message": f"Schedule added: {req}"}), 200)
 
 if __name__ == "__main__":
     print(f"Server running on port {PORT}")
