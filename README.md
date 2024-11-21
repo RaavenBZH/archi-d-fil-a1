@@ -45,13 +45,13 @@ Utilisation des différents endpoints :
   **Movie**
   - [GET] ```http://localhost:3200/json```
   - [GET] ```http://localhost:3200/```
-  - [GET] ```http://localhost:3200/movies/`<movieid>````
+  - [GET] ```http://localhost:3200/movies/`<movieid>` ```
   - [GET] ```http://localhost:3200/moviesbytitle?title=TITRE ```
   - [GET] ```http://localhost:3200/director=DIRECTOR ```
   - [GET] ```http://localhost:3200/moviesbyrate?rate=RATE```
   - [GET] ```http://localhost:3200/help```
-  - [POST] ```http://localhost:3200/addmovie/`<movieid>````
+  - [POST] ```http://localhost:3200/addmovie/`<movieid>` ```
   - [DEL] ```http://localhost:3200/movies/`<movieid>````
-  - [PUT] ```http://localhost:3200/movies/`<movieid>`/`<rate>````
+  - [PUT] ```http://localhost:3200/movies/`<movieid>`/`<rate>` ```
     
     
