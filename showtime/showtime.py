@@ -13,7 +13,7 @@ class ShowtimeServicer(showtime_pb2_grpc.ShowtimeServicer):
 
     def write(self, showtime):
         with open('{}/data/times.json'.format("."), 'w') as f:
-            json.dump(showtime, f)
+            json.dump({"schedule" : showtime}, f)
 
     def Home(self, request, context):
         print("Home")
