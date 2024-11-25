@@ -24,7 +24,7 @@ class BookingService(booking_pb2_grpc.BookingServiceServicer):
     def write(self, bookings):
         """Helper function to write bookings to JSON file."""
         with open(BOOKINGS_FILE, 'w') as f:
-            json.dump(bookings, f)
+            json.dump({"bookings": bookings}, f)
 
     def Home(self, request, context):
         """Home route to welcome users."""
