@@ -57,7 +57,6 @@ class BookingService(booking_pb2_grpc.BookingServiceServicer):
         """Route to get bookings for a specific user."""
         print("GetBookingsForUser")
         response = booking_pb2.BookingsUserResponse()
-        responseFound = False
         for booking in self.db["bookings"]:
             if booking["userid"] == request.userid:
                 response.userid = booking["userid"]
@@ -67,14 +66,7 @@ class BookingService(booking_pb2_grpc.BookingServiceServicer):
                         movies=date["movies"]
                     )
                     response.dates.append(date_item)
-                responseFound = True
                 break
-        if not responseFound:
-            context.set_code(grpc.StatusCode.NOT_FOUND)
-            context.set_details("Booking not found for this user")
-        else:
-            context.set_code(grpc.StatusCode.OK)
-            context.set_details("")
         return response
 
     def AddBookingForUser(self, request, context):
